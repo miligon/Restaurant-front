@@ -1,16 +1,27 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+
+import { PurchaseRouter } from "./purchase";
+import { TicketsRouter } from "./tickets";
+import { LoginPage } from "./auth";
 import './App.css'
 
-function App() {
+export default function App (){
 
   return (
     <>
-      <h1>APP</h1>
+      <BrowserRouter>
+        <div className="container">
+          <Routes>
+            <Route path="login" element={<LoginPage />} />
+            <Route path="tickets/*" element={<TicketsRouter />} />
+            <Route path="purchase/*" element={<PurchaseRouter />} />
+
+            <Route path="/" element={<Navigate to="/tickets" />} />
+
+          </Routes>
+        </div>
+      </BrowserRouter>
     </>
   )
 }
-
-export default App
