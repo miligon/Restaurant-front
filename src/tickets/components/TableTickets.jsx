@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const TableTickets = ({data}) => {
     return (
@@ -17,10 +18,14 @@ export const TableTickets = ({data}) => {
                         data.map(({code, name, maxPurchaseCount, purchaseCount}) => {
                             return(
                                     <tr key={code}>
-                                        <td className="text-center" scope="row">{code}</td>
+                                        <td className="text-center" scope="row">
+                                            <Link to={`/tickets/${code}`}>
+                                                {code}
+                                            </Link>
+                                        </td>
                                         <td className="text-center">{name}</td>
                                         <td className="text-center">{maxPurchaseCount}</td>
-                                        <td className="text-center">{maxPurchaseCount-purchaseCount}</td>
+                                        <td className="text-center">{purchaseCount}</td>
                                     </tr>
                             )
                     })
