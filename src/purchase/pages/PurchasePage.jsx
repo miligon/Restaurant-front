@@ -1,62 +1,96 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+import { FormPurchase } from '../components/FormPurchase';
+
+export const axiosR = axios.create({
+    baseURL: `${import.meta.env.VITE_BASE_URL}`,
+    validateStatus: function (status) {
+        return status < 500; // Resuelve solo si el código de estado es menor que 500
+      }
+  });
 
 export const PurchasePage = () => {
-    const [Ticket, setTicket] = useState({
-        "code": "80f1cabb-2016-409d-b1d1-d452eebe4816",
-        "name": "10% OFF",
-        "maxPurchaseCount": 5,
-        "purchaseCount": 0,
-        "soldout": true
-    })
+    const navigate = useNavigate();
+
+    const [Ticket, setTicket] = useState({})
+    const [AvailQty, setAvailQty] = useState(0)
     const { ticketCode } = useParams(); 
     
-    const available = () =>{
-        console.log(Ticket)
-        if (!!Ticket){
-            if (isNaN(Ticket.maxPurchaseCount) || isNaN(Ticket.purchaseCount)){
-                // if data is invalid returns empty array
-                console.log("NaN")
-                return ([]);
-            }
-            else{
-                const availOptions=[];
-                const numberAvail = Ticket.maxPurchaseCount - Ticket.purchaseCount;
-                console.log(numberAvail)
-                for (let i = 1; i <= numberAvail ; i++){
-                    availOptions.push(<option key={i} value={i}>{i}</option>);
+    const isInvalid = ticketCode === 'invalid';
+    const [Status, setStatus] = useState('')
+
+    useEffect(() => {
+        axiosR.get(`/api/reservations/tickets/${ticketCode}`)
+            .then((res) => {
+                if (res.status == 404){
+                    navigate('/purchase/invalid', {
+                        replace: true
+                      });
+                    console.log('No existe el ticket');
                 }
-                return availOptions;
-            }
-        }
+                else{
+                    setTicket(res.data);
+                    console.log("Ticket encontrado")
+                }
+            })
+            .catch(err => console.log(err))
+    }, [Status, ticketCode]);
+
+    //Handler for buy action
+    const onBuy = (data) =>{
+        console.log("Buy clicked", data)
+        axiosR.post(`/api/reservations/purchase/`, data)
+            .then((res) => {
+                if (res.status == 404) {
+                    navigate('/purchase/invalid', {
+                        replace: true
+                    });
+                    console.log('No existe el ticket')
+                }
+                else {
+                    if(res.status === 201) {setStatus('PURCHASE OK')}
+                    if(res.status === 403) {setStatus(res.data.error)}
+                }
+            })
+            .catch(err => console.log(err))
     }
 
-    const onBuy = (e) =>{
-        e.preventDefault()
-        console.log("Buy clicked")
+    // Message for soldout tickets
+    const msgSoldOut = () => {
+        return (
+            <>
+                <h5>Buy ticket: {ticketCode}</h5>
+                <h5>Offer: {Ticket.name}</h5>
+                <hr />
+                <h3>sold out!</h3>
+            </>
+        )
     }
+
+    
 
   return (
       <div className="container mt-5">
           <h1>Purchase page</h1>
           <hr />
-          <form onSubmit={onBuy}>
-              <h5>Buy ticket: {ticketCode}</h5>
-              <h5>Offer: {Ticket.name}</h5>
-              <hr />
-              <label>
-                  Quantity to buy:
-                  <select name="select">
-                      {available()}
-                  </select>
-              </label>
-              <hr />
-              <button className="btn btn-primary"
-                  type="submit"
-                  onClick={onBuy}>
-                  Buy
-              </button>
-          </form>
+          {isInvalid ? (
+              // If the ticket's code is invalid
+              <h3>Codigo invalido</h3>
+          ) :
+              (Ticket.soldout) ?
+                  (msgSoldOut()) :
+                  (
+                      <FormPurchase
+                          ticket={Ticket}
+                          onSubmit={onBuy}
+                      />
+                  )
+          }
+          {/*Shows messages to the buyer about its purchase*/}
+          {(Status === 'PURCHASE OK') && (<h2>Purchased succesfully !</h2>)}
+          {(Status !== '' && Status !== 'PURCHASE OK') && (<h2>Purchase failed: {Status}</h2>)}
       </div>
   )
 }
