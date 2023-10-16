@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-
-export const axiosR = axios.create({
-  baseURL: `${import.meta.env.VITE_BASE_URL}`
-});
+import { axiosR } from '../../auth';
 
 export const TicketDetailPage = ({restaurant}) => {
   const { id } = useParams();
@@ -16,6 +12,7 @@ export const TicketDetailPage = ({restaurant}) => {
     purchaseCount: 0,
     soldout: false
   });
+  const [Restaurant, setRestaurant] = useState(localStorage.getItem('restaurant'))
 
   // Detect if its a new ticket
   const isEditing = id !== 'new';
@@ -23,7 +20,7 @@ export const TicketDetailPage = ({restaurant}) => {
   useEffect(() => {
     // If editing an existing ticket, populate the form with the existing ticket data
     if (isEditing) {
-      axiosR.get(`/api/reservations/tickets/${id}`)
+      axiosR.get(`/api/reservations/tickets/${id}/`)
         .then((res) => {
           setTicket(res.data)
         })
@@ -52,6 +49,7 @@ export const TicketDetailPage = ({restaurant}) => {
       const payload = ticket;
       // Delete code from payload, it will be assign by the backend
       delete payload['code'];
+      payload['restaurant'] = Restaurant;
       axiosR.post(`/api/reservations/tickets/`, payload)
         .then((res) => {
           returnToTickets();

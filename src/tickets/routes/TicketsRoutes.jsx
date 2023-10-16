@@ -8,7 +8,9 @@ export const TicketsRouter = () => {
   return (
     <>
         <Routes>
-            <Route path=":id" element={<TicketDetailPage />} />
+            <Route path=":id" element={
+              <TicketDetailPage />
+              } />
             <Route path="/" element={<TicketPage />} />
         </Routes>
     </>

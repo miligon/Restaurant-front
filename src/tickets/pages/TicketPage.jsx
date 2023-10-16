@@ -6,7 +6,7 @@ import { axiosR } from '../../auth'
 
 export const TicketPage = () => {
   const [Tickets, setTickets] = useState([])
-  const [SelectedRestaurant, setSelectedRestaurant] = useState('1')
+  const [SelectedRestaurant, setSelectedRestaurant] = useState(localStorage.getItem('restaurant'))
   const [Restaurants, setRestaurants] = useState([])
 
   const onRestaurantChange = (newValue) =>{
@@ -23,6 +23,7 @@ export const TicketPage = () => {
   },[]);
 
   useEffect(() => {
+
     axiosR.get(`/api/reservations/tickets/?restaurant=${SelectedRestaurant}`)
       .then((res) => {
             setTickets(res.data)

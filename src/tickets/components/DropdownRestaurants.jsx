@@ -7,9 +7,10 @@ export const DropdownRestaurants = ({onRestaurantChange, restaurants}) => {
 
     const handleRestaurantChange = (event) => {
         // Handles the change on Restaurant value
-        const selectedSlug = event.target.value;
-        setSelectedRestaurant(selectedSlug);
-        onRestaurantChange(selectedSlug);
+        const selectedId = event.target.value;
+        setSelectedRestaurant(selectedId);
+        onRestaurantChange(selectedId);
+        localStorage.setItem('restaurant', selectedId);
       };
 
     useEffect(() => {

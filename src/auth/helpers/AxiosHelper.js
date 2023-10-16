@@ -25,7 +25,6 @@ axiosR.interceptors.request.use(
 
 axiosR.interceptors.response.use(
     response => {
-        // return response
         return response
     },
 
@@ -55,7 +54,7 @@ axiosR.interceptors.response.use(
                     if (res.status === 201) {
                         localStorage.setItem('access', JSON.stringify(res.data.access));
                         axios.defaults.headers.common['Authorization'] =
-                            'Bearer ' + localStorageService.getAccessToken()
+                            'Bearer ' + JSON.parse(localStorage.getItem('access'))
                         // If token is renewed, retry the original request
                         return axios(originalRequest)
                     }
