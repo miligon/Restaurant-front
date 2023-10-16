@@ -14,6 +14,7 @@ export const TicketPage = () => {
     setSelectedRestaurant(newValue)
   }
 
+  //Retrieve restaurant's list
   useEffect(() => {
     axiosR.get(`/api/restaurants/`)
       .then((res) => {
@@ -22,6 +23,7 @@ export const TicketPage = () => {
       .catch( err => console.log(err))
   },[]);
 
+  //Retrieve ticket's list per restaurant
   useEffect(() => {
     axiosR.get(`/api/reservations/tickets/?restaurant=${SelectedRestaurant}`)
       .then((res) => {

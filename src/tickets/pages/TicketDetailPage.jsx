@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { axiosR } from '../../auth';
 
-export const TicketDetailPage = ({restaurant}) => {
+export const TicketDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [ticket, setTicket] = useState({
@@ -47,7 +47,7 @@ export const TicketDetailPage = ({restaurant}) => {
     } else {
       // Create a new ticket
       const payload = ticket;
-      // Delete code from payload, it will be assign by the backend
+      // Delete code from payload, it will be assigned by the backend
       delete payload['code'];
       payload['restaurant'] = Restaurant;
       axiosR.post(`/api/reservations/tickets/`, payload)

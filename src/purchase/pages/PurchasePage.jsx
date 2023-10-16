@@ -16,7 +16,6 @@ export const PurchasePage = () => {
     const navigate = useNavigate();
 
     const [Ticket, setTicket] = useState({})
-    const [AvailQty, setAvailQty] = useState(0)
     const { ticketCode } = useParams(); 
     
     const isInvalid = ticketCode === 'invalid';
