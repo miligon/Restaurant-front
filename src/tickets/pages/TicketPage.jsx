@@ -1,36 +1,36 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { TableTickets } from '../components/TableTickets';
 import { DropdownRestaurants } from '../components/DropdownRestaurants';
-import { axiosR } from '../../auth'
+import { getRestaurantList, getTicketList } from '../../helpers/ApiConn';
 
 export const TicketPage = () => {
-  const [Tickets, setTickets] = useState([])
-  const [SelectedRestaurant, setSelectedRestaurant] = useState(localStorage.getItem('restaurant'))
-  const [Restaurants, setRestaurants] = useState([])
+  const { restaurant } = useParams();
+  const [Tickets, setTickets] = useState([]);
+  const [SelectedRestaurant, setSelectedRestaurant] = useState(restaurant);//localStorage.getItem('restaurant'));
+  const [Restaurants, setRestaurants] = useState([]);
 
+  console.log(restaurant)
   const onRestaurantChange = (newValue) =>{
     console.log(newValue)
     setSelectedRestaurant(newValue)
   }
 
   //Retrieve restaurant's list
-  useEffect(() => {
-    axiosR.get(`/api/restaurants/`)
-      .then((res) => {
-            setRestaurants(res.data)
-          })
-      .catch( err => console.log(err))
-  },[]);
+    useEffect(() => {
+        getRestaurantList()
+            .then((res) => {
+                setRestaurants(res.data)
+            })
+    }, []);
 
   //Retrieve ticket's list per restaurant
-  useEffect(() => {
-    axiosR.get(`/api/reservations/tickets/?restaurant=${SelectedRestaurant}`)
-      .then((res) => {
-            setTickets(res.data)
-          })
-      .catch( err => console.log(err))
-  },[SelectedRestaurant]);
+    useEffect(() => {
+        getTicketList(restaurant)
+            .then((res) => {
+                setTickets(res.data)
+            })
+    }, [restaurant]);
 
   return (
       <div className="container mt-5">
@@ -39,7 +39,6 @@ export const TicketPage = () => {
           <div className='row'>
             <div className='col'>
             <DropdownRestaurants
-                onRestaurantChange={onRestaurantChange}
                 restaurants={Restaurants}
             />
             </div>

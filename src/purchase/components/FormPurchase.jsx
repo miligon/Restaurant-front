@@ -21,7 +21,7 @@ export const FormPurchase = ({ticket, onSubmit}) =>{
             else{
                 //Generate elements for available tickets
                 const availOptions=[];
-                if (ticket.soldout === false || ticket.available > 0) {
+                if (ticket.available > 0) {
                     //setAvailQty(numberAvail);
                     console.log("Disponibles:", ticket.available);
                     for (let i = 1; i <= ticket.available; i++) {

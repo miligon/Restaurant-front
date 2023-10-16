@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { axiosR } from '../../auth';
+import {getTicketDetail, updateTicketDetail, createTicketDetail, deleteTicketDetail} from '../../helpers/ApiConn'
 
 export const TicketDetailPage = () => {
-  const { id } = useParams();
+  const { id, restaurant } = useParams();
   const navigate = useNavigate();
   const [ticket, setTicket] = useState({
     code: '',
@@ -12,7 +12,6 @@ export const TicketDetailPage = () => {
     purchaseCount: 0,
     soldout: false
   });
-  const [Restaurant, setRestaurant] = useState(localStorage.getItem('restaurant'))
 
   // Detect if its a new ticket
   const isEditing = id !== 'new';
@@ -20,16 +19,15 @@ export const TicketDetailPage = () => {
   useEffect(() => {
     // If editing an existing ticket, populate the form with the existing ticket data
     if (isEditing) {
-      axiosR.get(`/api/reservations/tickets/${id}/`)
+      getTicketDetail(id, restaurant)
         .then((res) => {
-          setTicket(res.data)
-        })
-        .catch(err => console.log(err))
+          setTicket(res.data);
+        });
     }
   }, [isEditing]);
 
   const returnToTickets = () => {
-    navigate('/tickets', {
+    navigate(`/${restaurant}/tickets`, {
       replace: true
     })
   }
@@ -39,34 +37,30 @@ export const TicketDetailPage = () => {
     if (isEditing) {
       // Update Ticket
       console.log('Ticket edited:', ticket);
-      axiosR.put(`/api/reservations/tickets/${id}/`, ticket)
-        .then((res) => {
+      updateTicketDetail(id, ticket, restaurant)
+        .then(() => {
           returnToTickets();
-        })
-        .catch(err => console.log(err))
+        });
     } else {
       // Create a new ticket
       const payload = ticket;
       // Delete code from payload, it will be assigned by the backend
       delete payload['code'];
-      payload['restaurant'] = Restaurant;
-      axiosR.post(`/api/reservations/tickets/`, payload)
-        .then((res) => {
+      createTicketDetail(ticket, restaurant)
+        .then(() => {
           returnToTickets();
-        })
-        .catch(err => console.log(err))
+        });
       console.log('New ticket created:', ticket);
     }
   };
 
   const onDelete = () => {
     // Delete Ticket
-    axiosR.delete(`/api/reservations/tickets/${id}/`)
-        .then((res) => {
-          returnToTickets();
-        })
-        .catch(err => console.log(err))
-    console.log("Ticket deleted:", ticket)
+    deleteTicketDetail(id, restaurant)
+      .then(() => {
+        returnToTickets();
+      });
+    console.log("Ticket deleted:", ticket);
   }
 
   return (

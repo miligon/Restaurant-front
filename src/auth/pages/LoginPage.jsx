@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from "react";
 import { AuthContext } from '../AuthContext';
+import { getRestaurantList } from '../../helpers/ApiConn';
 
 export const LoginPage = () => {
 
@@ -15,13 +16,17 @@ export const LoginPage = () => {
       if (username != "" &&
         password != "") {
   
-        const lastPath = localStorage.getItem('lastPath') || '/';
-  
         const response = await login(username, password); 
         console.log(response)
-        navigate(lastPath, {
-          replace: true
-        });
+        // If the user is logged in successfully, redirect to the tickets page of the first restaurant
+        getRestaurantList()
+        .then((res)=>{
+            const url = `/${res.data[0].slug}/tickets`
+            console.log(url)
+            navigate(url, {
+                replace: true
+              });
+        })
       }
     }
 

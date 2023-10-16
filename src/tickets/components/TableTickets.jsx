@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const TableTickets = ({data}) => {
+    const { restaurant } = useParams();
     return (
         <>
             <table className="table table-sm table-striped table-hover">
@@ -14,11 +15,11 @@ export const TableTickets = ({data}) => {
                 </thead>
                 <tbody>
                     {
-                        data.map(({code, name, maxPurchaseCount, purchaseCount}) => {
+                        data.map(({code, name, purchaseCount}) => {
                             return(
                                     <tr key={code}>
                                         <td className="text-center" scope="row">
-                                            <Link to={`/tickets/${code}`}>
+                                            <Link to={`/${restaurant}/tickets/${code}`}>
                                                 {code}
                                             </Link>
                                         </td>

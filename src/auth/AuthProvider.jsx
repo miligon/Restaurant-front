@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     const response = await axios.post(`${base_url}/api/auth/jwt/create/`, {
       "username": username,
       "password": pass
-    })
+  })
 
     // If logged in store token
     if (response.status == 200) {

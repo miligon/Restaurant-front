@@ -27,7 +27,7 @@ export default function App (){
               <Route path="logout" element={
                   <LogoutPage />
               } />
-              <Route path="tickets/*" element={
+              <Route path=":restaurant/tickets/*" element={
                 <PrivateRoute>
                   <TicketsRouter />
                 </PrivateRoute>
@@ -36,7 +36,7 @@ export default function App (){
                   <PurchaseRouter />
               } />
 
-              <Route path="/*" element={<Navigate to="tickets" />} />
+              <Route path="/*" element={<Navigate to="/login" />} />
 
             </Routes>
           </div>

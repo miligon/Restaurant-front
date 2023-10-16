@@ -1,27 +1,23 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-
-export const DropdownRestaurants = ({onRestaurantChange, restaurants}) => {
-    const [selectedRestaurant, setSelectedRestaurant] = useState("");
+export const DropdownRestaurants = ({ restaurants}) => {
+    const { restaurant } = useParams();
+    const [selectedRestaurant, setSelectedRestaurant] = useState(restaurant);
+    const navigate = useNavigate();
 
     const handleRestaurantChange = (event) => {
         // Handles the change on Restaurant value
-        const selectedId = event.target.value;
-        setSelectedRestaurant(selectedId);
-        onRestaurantChange(selectedId);
-        localStorage.setItem('restaurant', selectedId);
+        const selectedSlug = event.target.value;
+        setSelectedRestaurant(selectedSlug);
+        navigate(`/${selectedSlug}/tickets`);
       };
 
     useEffect(() => {
-        // Handle the default selection when the restaurant list changes
-        if (restaurants.length > 0) {
-          setSelectedRestaurant(restaurants[0].id);
-          onRestaurantChange(restaurants[0].id);
-        }
-      }, [restaurants]);
+        // Handle the default selection when the restaurant param changes
+        setSelectedRestaurant(restaurant);
+      }, [restaurant]);
 
-      
     return (
         <>
             <label>
@@ -33,7 +29,7 @@ export const DropdownRestaurants = ({onRestaurantChange, restaurants}) => {
                     {
                         restaurants.map(({ name, slug, id }) => {
                             return (
-                                <option key={id} value={id}>{name}</option>
+                                <option key={id} value={slug}>{name}</option>
                             )
                         })
 

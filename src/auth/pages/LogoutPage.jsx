@@ -6,15 +6,14 @@ import { useNavigate } from 'react-router-dom';
 // views
 export const LogoutPage = () => {
 
-  const { logout } = useContext( AuthContext );
+  const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   logout()
-  localStorage.removeItem('lastPath')
   navigate('/', {
     replace: true
   });
   return (
-  <>
-  </>
+    <>
+    </>
   );
 }
