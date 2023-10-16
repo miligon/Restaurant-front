@@ -5,7 +5,6 @@ export const FormPurchase = ({ticket, onSubmit}) =>{
     const [Options, setOptions] = useState([])
     const [selectedOption, setSelectedOption] = useState(1)
     const [BuyerName, setBuyerName] = useState('')
-    const [data, setData] = useState(null)
 
     useEffect(() => {
         calcAvailable();

@@ -32,7 +32,7 @@ export const DropdownRestaurants = ({onRestaurantChange, restaurants}) => {
                     {
                         restaurants.map(({ name, slug, id }) => {
                             return (
-                                <option key={id} value={slug}>{name}</option>
+                                <option key={id} value={id}>{name}</option>
                             )
                         })
 

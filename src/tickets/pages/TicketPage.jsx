@@ -1,36 +1,13 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { TableTickets } from '../components/TableTickets';
 import { DropdownRestaurants } from '../components/DropdownRestaurants';
-import axios from 'axios';
-
-
-export const axiosR = axios.create({
-    baseURL: `${import.meta.env.VITE_BASE_URL}`
-  });
-
-  const restaurants = [
-    {
-        "id": 1,
-        "name": "Chalupitas MX",
-        "slug": "chalupitas-mx"
-    },
-    {
-        "id": 2,
-        "name": "Chipotle Los Angeles",
-        "slug": "chipotle-los-angeles"
-    },
-    {
-        "id": 3,
-        "name": "Italian's Pizza NY",
-        "slug": "italians-pizza-ny"
-    }
-]
+import { axiosR } from '../../auth'
 
 export const TicketPage = () => {
   const [Tickets, setTickets] = useState([])
   const [SelectedRestaurant, setSelectedRestaurant] = useState('1')
-  const [Restaurants, setRestaurants] = useState(restaurants)
+  const [Restaurants, setRestaurants] = useState([])
 
   const onRestaurantChange = (newValue) =>{
     console.log(newValue)
@@ -38,7 +15,15 @@ export const TicketPage = () => {
   }
 
   useEffect(() => {
-    axiosR.get(`/api/reservations/tickets/`)
+    axiosR.get(`/api/restaurants/`)
+      .then((res) => {
+            setRestaurants(res.data)
+          })
+      .catch( err => console.log(err))
+  },[]);
+
+  useEffect(() => {
+    axiosR.get(`/api/reservations/tickets/?restaurant=${SelectedRestaurant}`)
       .then((res) => {
             setTickets(res.data)
           })

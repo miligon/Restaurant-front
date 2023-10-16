@@ -9,7 +9,6 @@ export const TableTickets = ({data}) => {
                     <tr>
                         <th className="" scope="col">Code</th>
                         <th className="" scope="col">Name</th>
-                        <th className="" scope="col">Max purchase count</th>
                         <th className="" scope="col">Purchased count</th>
                     </tr>
                 </thead>
@@ -24,7 +23,6 @@ export const TableTickets = ({data}) => {
                                             </Link>
                                         </td>
                                         <td className="text-center">{name}</td>
-                                        <td className="text-center">{maxPurchaseCount}</td>
                                         <td className="text-center">{purchaseCount}</td>
                                     </tr>
                             )
