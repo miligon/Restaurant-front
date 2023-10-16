@@ -10,7 +10,7 @@ export const PublicRoute = ({ children }) => {
 
     return (!logged)
         ? children
-        : <Navigate to="/login" />
+        : <Navigate to="/tickets" />
 }
 
 export default PublicRoute

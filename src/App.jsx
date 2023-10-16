@@ -7,7 +7,8 @@ import { PublicRoute } from "./router/PublicRoute";
 
 import { PurchaseRouter } from "./purchase";
 import { TicketsRouter } from "./tickets";
-import { LoginPage } from "./auth";
+import { LoginPage } from "./auth/pages/LoginPage";
+import { LogoutPage } from "./auth/pages/LogoutPage";
 import './App.css'
 
 export default function App (){
@@ -23,15 +24,16 @@ export default function App (){
                   <LoginPage />
                 </PublicRoute>
               } />
+              <Route path="logout" element={
+                  <LogoutPage />
+              } />
               <Route path="tickets/*" element={
                 <PrivateRoute>
                   <TicketsRouter />
                 </PrivateRoute>
               } />
               <Route path="purchase/*" element={
-                <PublicRoute>
                   <PurchaseRouter />
-                </PublicRoute>
               } />
 
               <Route path="/*" element={<Navigate to="tickets" />} />

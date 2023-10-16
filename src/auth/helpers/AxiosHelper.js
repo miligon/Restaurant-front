@@ -3,10 +3,10 @@ import axios from 'axios'
 
 export const axiosR = axios.create({
     baseURL: `${import.meta.env.VITE_BASE_URL}`,
-    validateStatus: function (status) {
+    /*validateStatus: function (status) {
         //Resolve only whe status code is less than 500
         return status < 500;
-    }
+    }*/
 });
 
 // Use authentication token on every request
@@ -47,11 +47,11 @@ axiosR.interceptors.response.use(
             const refreshToken = JSON.parse(localStorage.getItem('refresh'))
             // Try to renew token
             return axios
-                .post(`/api/auth/jwt/refresh/`, {
-                    refresh_token: refreshToken
+                .post(`${import.meta.env.VITE_BASE_URL}/api/auth/jwt/refresh/`, {
+                    refresh: refreshToken
                 })
                 .then(res => {
-                    if (res.status === 201) {
+                    if (res.status === 200) {
                         localStorage.setItem('access', JSON.stringify(res.data.access));
                         axios.defaults.headers.common['Authorization'] =
                             'Bearer ' + JSON.parse(localStorage.getItem('access'))

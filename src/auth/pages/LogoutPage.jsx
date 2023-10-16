@@ -1,12 +1,10 @@
 import React from "react";
 import { useContext} from "react";
-import { AuthContext } from "../auth/AuthContext";
+import { AuthContext } from "../AuthContext";
 import { useNavigate } from 'react-router-dom';
 
-import "../assets/styles/Login.css"
-
 // views
-export default function LogoutPage() {
+export const LogoutPage = () => {
 
   const { logout } = useContext( AuthContext );
   const navigate = useNavigate();

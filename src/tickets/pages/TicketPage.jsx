@@ -23,7 +23,6 @@ export const TicketPage = () => {
   },[]);
 
   useEffect(() => {
-
     axiosR.get(`/api/reservations/tickets/?restaurant=${SelectedRestaurant}`)
       .then((res) => {
             setTickets(res.data)
@@ -43,11 +42,13 @@ export const TicketPage = () => {
             />
             </div>
             <div className='col'>
-                <Link to='new'>Nuevo</Link>
+                <Link to='new'>New</Link>
             </div>
           </div>
           <hr />
           <TableTickets data={Tickets} />
+          <hr />
+          <Link to='/logout'>Logout</Link>
       </div>
   )
 }
