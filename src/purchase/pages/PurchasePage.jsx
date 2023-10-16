@@ -22,7 +22,7 @@ export const PurchasePage = () => {
     const [Status, setStatus] = useState('')
 
     useEffect(() => {
-        axiosR.get(`/api/reservations/tickets/${ticketCode}`)
+        axiosR.get(`/api/reservations/purchase/${ticketCode}`)
             .then((res) => {
                 if (res.status == 404){
                     navigate('/purchase/invalid', {
@@ -79,7 +79,7 @@ export const PurchasePage = () => {
               // If the ticket's code is invalid
               <h3>Codigo invalido</h3>
           ) :
-              (Ticket.soldout) ?
+              (Ticket.available <= 0) ?
                   (msgSoldOut()) :
                   (
                       <FormPurchase
