@@ -15,8 +15,8 @@ export const DropdownRestaurants = ({onRestaurantChange, restaurants}) => {
     useEffect(() => {
         // Handle the default selection when the restaurant list changes
         if (restaurants.length > 0) {
-          setSelectedRestaurant(restaurants[0].slug);
-          onRestaurantChange(restaurants[0].slug);
+          setSelectedRestaurant(restaurants[0].id);
+          onRestaurantChange(restaurants[0].id);
         }
       }, [restaurants]);
 
