@@ -7,9 +7,10 @@ import { FormPurchase } from '../components/FormPurchase';
 export const axiosR = axios.create({
     baseURL: `${import.meta.env.VITE_BASE_URL}`,
     validateStatus: function (status) {
-        return status < 500; // Resuelve solo si el código de estado es menor que 500
-      }
-  });
+        //Resolve only whe status code is less than 500
+        return status < 500;
+    }
+});
 
 export const PurchasePage = () => {
     const navigate = useNavigate();

@@ -13,7 +13,7 @@ export const FormPurchase = ({ticket, onSubmit}) =>{
     const calcAvailable = () =>{
         console.log(ticket)
         if (!!ticket){
-            if (isNaN(ticket.maxPurchaseCount) || isNaN(ticket.purchaseCount)){
+            if (isNaN(ticket.available)){
                 // if data is invalid returns empty array
                 console.log("NaN")
                 setOptions([])
@@ -21,11 +21,10 @@ export const FormPurchase = ({ticket, onSubmit}) =>{
             else{
                 //Generate elements for available tickets
                 const availOptions=[];
-                const numberAvail = ticket.maxPurchaseCount - ticket.purchaseCount;
-                if (ticket.soldout === false || numberAvail > 0) {
+                if (ticket.soldout === false || ticket.available > 0) {
                     //setAvailQty(numberAvail);
-                    console.log("Disponibles:", numberAvail);
-                    for (let i = 1; i <= numberAvail; i++) {
+                    console.log("Disponibles:", ticket.available);
+                    for (let i = 1; i <= ticket.available; i++) {
                         availOptions.push(<option key={i} value={i}>{i}</option>);
                     }
                     setOptions(availOptions)
