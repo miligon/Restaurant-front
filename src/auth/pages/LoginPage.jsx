@@ -1,18 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from "react";
+import { AuthContext } from '../AuthContext';
 
 export const LoginPage = () => {
 
-    //const { login } = useContext( AuthContext );
+    const { login } = useContext( AuthContext );
     const navigate = useNavigate();
-  
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
   
     const onLogin = async (e) => {
       e.preventDefault();
-      /*
       if (username != "" &&
         password != "") {
   
@@ -23,7 +22,7 @@ export const LoginPage = () => {
         navigate(lastPath, {
           replace: true
         });
-      }*/
+      }
     }
 
   return (
