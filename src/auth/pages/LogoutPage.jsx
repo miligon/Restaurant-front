@@ -1,19 +1,16 @@
 import React from "react";
-import { useContext} from "react";
-import { AuthContext } from "../AuthContext";
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { DoLogout } from '../../store/auth/thunks';
+import { Navigate } from 'react-router-dom';
 
 // views
 export const LogoutPage = () => {
-
-  const { logout } = useContext(AuthContext);
-  const navigate = useNavigate();
-  logout()
-  navigate('/', {
-    replace: true
-  });
+  const dispatch = useDispatch();
+  dispatch(DoLogout())
+  
   return (
     <>
+      <Navigate to="/login" />
     </>
   );
 }

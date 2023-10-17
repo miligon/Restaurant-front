@@ -1,22 +1,18 @@
 import { login, logout, checkingCredentials } from "./"
-import { loginOnServer, refreshToken } from "../../api/loginApi";
+import { loginOnServer, refreshTokenOnServer } from "../../api/loginApi";
 
 export const checkAuthentication = () => {
-    return async (dispatch) => {
+    return (dispatch) => {
         dispatch(checkingCredentials());
         const refreshToken = JSON.parse(localStorage.getItem('refresh'));
-        if (refreshToken !== '' && refreshToken !== null) {
-            const response = await refreshToken(refreshToken)
-            console.log(response)
-            if (response.status == 200) {
-                const token = {
-                    "access": response.data.access,
-                    "refresh": refreshToken
-                }
-            }
-            dispatch(login(token));
+        const accessToken = JSON.parse(localStorage.getItem('access'));
+        if (refreshToken !== '' && refreshToken !== null &&
+            accessToken !== ''  && refreshToken !== null) {
+            dispatch(login());
         }
-        dispatch(logout());
+        else{
+            dispatch(logout());
+        }
     }
 }
 
@@ -25,15 +21,17 @@ export const DoLogin = (user, pass) => {
         dispatch(checkingCredentials());
 
         const response = await loginOnServer(user, pass)
-        console.log(response)
+        //console.log(response)
         if (response.status == 200) {
             const token = response.data
             localStorage.setItem('refresh', JSON.stringify(token.refresh))
             localStorage.setItem('access', JSON.stringify(token.access))
-            dispatch(login(token));
+            dispatch(login());
+            return;
         }
         else {
             dispatch(logout());
+            return;
         }
     }
 }
@@ -41,6 +39,8 @@ export const DoLogin = (user, pass) => {
 export const DoLogout = () => {
     return (dispatch) => {
         localStorage.removeItem('refresh')
+        localStorage.removeItem('access')
         dispatch(logout());
+        return;
     }
 }

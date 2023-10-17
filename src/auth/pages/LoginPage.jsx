@@ -1,15 +1,9 @@
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useContext, useState } from "react";
-import { AuthContext } from '../AuthContext';
-import { getRestaurantList } from '../../api/ticketsApi';
+import { useState } from "react";
 import { DoLogin } from '../../store/auth/thunks';
 
 
 export const LoginPage = () => {
-
-    const { login } = useContext( AuthContext );
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [username, setUsername] = useState("");
@@ -21,15 +15,6 @@ export const LoginPage = () => {
         password != "") {
 
         dispatch(DoLogin(username, password));
-       // If the user is logged in successfully, redirect to the tickets page of the first restaurant
-        getRestaurantList()
-        .then((res)=>{
-            const url = `/${res.data[0].slug}/tickets`
-            console.log(url)
-            navigate(url, {
-                replace: true
-              });
-        })
       }
     }
 
