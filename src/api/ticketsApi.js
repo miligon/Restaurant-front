@@ -1,4 +1,4 @@
-import { axiosR } from "../auth";
+import { axiosR } from "./";
 
 export const getRestaurantList = async() => {
     try {

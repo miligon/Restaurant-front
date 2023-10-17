@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
-import { AuthProvider } from "./auth";
+
 import { PrivateRoute } from "./router/PrivateRoute";
 import { PublicRoute } from "./router/PublicRoute";
 
@@ -15,33 +15,31 @@ export default function App (){
 
   return (
     <>
-      <AuthProvider>
-        <BrowserRouter>
-          <div className="container">
-            <Routes>
-              <Route path="login" element={
-                <PublicRoute>
-                  <LoginPage />
-                </PublicRoute>
-              } />
-              <Route path="logout" element={
-                  <LogoutPage />
-              } />
-              <Route path=":restaurant/tickets/*" element={
-                <PrivateRoute>
-                  <TicketsRouter />
-                </PrivateRoute>
-              } />
-              <Route path="purchase/*" element={
-                  <PurchaseRouter />
-              } />
+      <BrowserRouter>
+        <div className="container">
+          <Routes>
+            <Route path="login" element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            } />
+            <Route path="logout" element={
+                <LogoutPage />
+            } />
+            <Route path=":restaurant/tickets/*" element={
+              <PrivateRoute>
+                <TicketsRouter />
+              </PrivateRoute>
+            } />
+            <Route path="purchase/*" element={
+                <PurchaseRouter />
+            } />
 
-              <Route path="/*" element={<Navigate to="/login" />} />
+            <Route path="/*" element={<Navigate to="/login" />} />
 
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </AuthProvider>
+          </Routes>
+        </div>
+      </BrowserRouter>
     </>
   )
 }

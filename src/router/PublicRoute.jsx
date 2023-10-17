@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { AuthContext } from '../auth';
-import { getRestaurantList } from '../helpers/ApiConn';
+import { useSelector } from 'react-redux';
+import { getRestaurantList } from '../api/ticketsApi';
 
 
 export const PublicRoute = ({ children }) => {
 
-    const { logged } = useContext( AuthContext );
+    const { logged } = useSelector( state => state.auth);
+    
     const navigate = useNavigate();
 
     // If is logged redirect to the first restaurant page

@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { TableTickets } from '../components/TableTickets';
 import { DropdownRestaurants } from '../components/DropdownRestaurants';
-import { getRestaurantList, getTicketList } from '../../helpers/ApiConn';
+import { getRestaurantList, getTicketList } from '../../api/ticketsApi';
 
 export const TicketPage = () => {
   const { restaurant } = useParams();

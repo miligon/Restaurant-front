@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {getTicketDetail, updateTicketDetail, createTicketDetail, deleteTicketDetail} from '../../helpers/ApiConn'
+import {getTicketDetail, updateTicketDetail, createTicketDetail, deleteTicketDetail} from '../../api/ticketsApi'
 
 export const TicketDetailPage = () => {
   const { id, restaurant } = useParams();
