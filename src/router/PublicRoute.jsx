@@ -1,29 +1,24 @@
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getRestaurantList } from '../api/ticketsApi';
 
 
 export const PublicRoute = ({ children }) => {
 
-    const { logged } = useSelector( state => state.auth);
-    
-    const navigate = useNavigate();
+    const { logged } = useSelector(state => state.auth);
+    const { restaurants, status } = useSelector(state => state.restaurants);
 
-    // If is logged redirect to the first restaurant page
-    const redirect = () => {
-        getRestaurantList()
-            .then((res) => {
-                const url = `/${res.data[0].slug}/tickets`
-                console.log(url)
-                navigate(url, {
-                    replace: true
-                });
-            })
-    }
-
-    return (!logged)
-        ? children
-        : redirect()
+    return (
+        <>
+            {!logged ? children
+            // If is logged redirect to the first restaurant page
+                : (status == 'loaded' ? 
+                        (<Navigate to={`/${restaurants[0].slug}/tickets`}/>) 
+                        :
+                        (<h1>Loading ...</h1>)
+                  )
+            }
+        </>
+    )
 }
 
 export default PublicRoute

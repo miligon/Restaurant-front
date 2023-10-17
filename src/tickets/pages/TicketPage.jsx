@@ -7,22 +7,6 @@ import { getRestaurantList, getTicketList } from '../../api/ticketsApi';
 export const TicketPage = () => {
   const { restaurant } = useParams();
   const [Tickets, setTickets] = useState([]);
-  const [SelectedRestaurant, setSelectedRestaurant] = useState(restaurant);//localStorage.getItem('restaurant'));
-  const [Restaurants, setRestaurants] = useState([]);
-
-  console.log(restaurant)
-  const onRestaurantChange = (newValue) =>{
-    console.log(newValue)
-    setSelectedRestaurant(newValue)
-  }
-
-  //Retrieve restaurant's list
-    useEffect(() => {
-        getRestaurantList()
-            .then((res) => {
-                setRestaurants(res.data)
-            })
-    }, []);
 
   //Retrieve ticket's list per restaurant
     useEffect(() => {
@@ -38,9 +22,7 @@ export const TicketPage = () => {
           <hr />
           <div className='row'>
             <div className='col'>
-            <DropdownRestaurants
-                restaurants={Restaurants}
-            />
+            <DropdownRestaurants/>
             </div>
             <div className='col'>
                 <Link to='new'>New</Link>

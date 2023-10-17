@@ -1,4 +1,5 @@
 import { login, logout, checkingCredentials } from "./"
+import { getRestaurants } from "../restaurants";
 import { loginOnServer, refreshTokenOnServer } from "../../api/loginApi";
 
 export const checkAuthentication = () => {
@@ -8,6 +9,7 @@ export const checkAuthentication = () => {
         const accessToken = JSON.parse(localStorage.getItem('access'));
         if (refreshToken !== '' && refreshToken !== null &&
             accessToken !== ''  && refreshToken !== null) {
+            dispatch(getRestaurants());
             dispatch(login());
         }
         else{
@@ -26,6 +28,7 @@ export const DoLogin = (user, pass) => {
             const token = response.data
             localStorage.setItem('refresh', JSON.stringify(token.refresh))
             localStorage.setItem('access', JSON.stringify(token.access))
+            dispatch(getRestaurants());
             dispatch(login());
             return;
         }
