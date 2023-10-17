@@ -13,7 +13,7 @@ export const PublicRoute = ({ children }) => {
     const redirect = () => {
         getRestaurantList()
             .then((res) => {
-                const url = `/${res[0].slug}/tickets`
+                const url = `/${res.data[0].slug}/tickets`
                 console.log(url)
                 navigate(url, {
                     replace: true
