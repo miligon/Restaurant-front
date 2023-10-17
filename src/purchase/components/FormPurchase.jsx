@@ -41,7 +41,7 @@ export const FormPurchase = ({ticket, onSubmit}) =>{
     const onBuy = (e) =>{
         e.preventDefault();
         onSubmit({
-            "guestName": BuyerName,
+            "guest_name": BuyerName,
             "quantity": selectedOption,
             "ticket": ticket.code
         })

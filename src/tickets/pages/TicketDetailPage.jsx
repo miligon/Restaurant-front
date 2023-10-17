@@ -8,8 +8,8 @@ export const TicketDetailPage = () => {
   const [ticket, setTicket] = useState({
     code: '',
     name: '',
-    maxPurchaseCount: 0,
-    purchaseCount: 0,
+    max_purchase_count: 0,
+    purchase_count: 0,
     soldout: false
   });
 
@@ -83,8 +83,8 @@ export const TicketDetailPage = () => {
           Max Purchase Count:
           <input
             type="number"
-            value={ticket.maxPurchaseCount}
-            onChange={(e) => setTicket({ ...ticket, maxPurchaseCount: parseInt(e.target.value, 10) })}
+            value={ticket.max_purchase_count}
+            onChange={(e) => setTicket({ ...ticket, max_purchase_count: parseInt(e.target.value, 10) })}
           />
         </label>
         <br /><br />
@@ -92,8 +92,8 @@ export const TicketDetailPage = () => {
           Purchase Count:
           <input
             type="number"
-            value={ticket.purchaseCount}
-            onChange={(e) => setTicket({ ...ticket, purchaseCount: parseInt(e.target.value, 10) })}
+            value={ticket.purchase_count}
+            onChange={(e) => setTicket({ ...ticket, purchase_count: parseInt(e.target.value, 10) })}
           />
         </label>
         <hr />

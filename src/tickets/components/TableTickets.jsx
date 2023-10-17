@@ -15,7 +15,7 @@ export const TableTickets = ({data}) => {
                 </thead>
                 <tbody>
                     {
-                        data.map(({code, name, purchaseCount}) => {
+                        data.map(({code, name, purchase_count}) => {
                             return(
                                     <tr key={code}>
                                         <td className="text-center" scope="row">
@@ -24,7 +24,7 @@ export const TableTickets = ({data}) => {
                                             </Link>
                                         </td>
                                         <td className="text-center">{name}</td>
-                                        <td className="text-center">{purchaseCount}</td>
+                                        <td className="text-center">{purchase_count}</td>
                                     </tr>
                             )
                     })
