@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { authSlice } from './auth'
 import { restaurantSlice } from './restaurants'
 import { ticketsSlice } from './tickets'
@@ -13,9 +13,9 @@ export const store = configureStore({
   reducer: combineReducers({
     auth: authSlice.reducer,
     restaurants: restaurantSlice.reducer,
-    tickets: ticketsSlice.reducer
-  })
-});
+    tickets: ticketsSlice.reducer,
+  }),
+})
 
 export type RootState = ReturnType<typeof store.getState>
 

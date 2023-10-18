@@ -1,2 +1,2 @@
-export * from './interceptors';
-export * from './ticketsApi';
+export * from './interceptors'
+export * from './ticketsApi'
