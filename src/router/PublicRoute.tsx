@@ -1,11 +1,15 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { RootState } from '../store'
 
+interface PrivateRouteProps {
+    children: React.ReactNode;
+  }
 
-export const PublicRoute = ({ children }) => {
+export const PublicRoute: React.FC<PrivateRouteProps> = ({ children }) => {
 
-    const { logged } = useSelector(state => state.auth);
-    const { restaurants, status } = useSelector(state => state.restaurants);
+    const { logged } = useSelector((state: RootState) => state.auth);
+    const { restaurants, status } = useSelector((state: RootState) => state.restaurants);
 
     return (
         <>

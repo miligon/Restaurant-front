@@ -1,7 +1,13 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import { ticketFromServer } from "../../store";
 
-export const TableTickets = ({data}) => {
+
+interface TableTicketsProps {
+    data:ticketFromServer[]
+  }
+
+export const TableTickets: React.FC<TableTicketsProps> = ({data}) => {
     const { restaurant } = useParams();
     return (
         <>

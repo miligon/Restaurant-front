@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+import { ticketFromServer } from '../interfaces';
 
 export const ticketsSlice = createSlice({
     name: 'tickets',
     initialState: {
         status: 'not-loaded', // loading, loaded, not-refreshed
-        tickets: [],
+        tickets: [] as ticketFromServer[],
     },
     reducers: {
         setTickets: (state, action) => {

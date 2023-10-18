@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { restaurant } from '../interfaces';
 
 
 export const restaurantSlice = createSlice({
     name: 'restaurants',
     initialState: {
         status: 'not-loaded', // loading, loaded
-        restaurants: [],
-        selectedRestaurant: null,
+        restaurants: [] as restaurant[],
+        selectedRestaurant: 0,
     },
     reducers: {
         setRestaurants: (state, action) => {

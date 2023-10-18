@@ -4,13 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { refreshTickets } from '../../store/tickets';
 import { TableTickets } from '../components/TableTickets';
 import { DropdownRestaurants } from '../components/DropdownRestaurants';
+import { RootState } from '../../store';
 
 
 export const TicketPage = () => {
 
   const dispatch = useDispatch();
-  const { tickets, status } = useSelector(state => state.tickets)
-  const { restaurants, selectedRestaurant } = useSelector(state => state.restaurants)
+  const { tickets, status } = useSelector((state:RootState) => state.tickets)
+  const { restaurants, selectedRestaurant } = useSelector((state:RootState) => state.restaurants)
 
   //Retrieve ticket's list per restaurant
   useEffect(() => {

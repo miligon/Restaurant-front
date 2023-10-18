@@ -1,8 +1,14 @@
-import { useState, useEffect } from "react"
+import React, { useState, useEffect, JSX } from "react"
+import { buyInfo, unauthTicket} from "../interfaces"
 
-export const FormPurchase = ({ticket, onSubmit}) =>{
+interface FormPurchaseProps {
+    ticket: unauthTicket;
+    onSubmit: (arg0: buyInfo) => void;
+  }
 
-    const [Options, setOptions] = useState([])
+export const FormPurchase: React.FC<FormPurchaseProps> = ({ ticket, onSubmit }) => {
+
+    const [Options, setOptions] = useState<JSX.Element[]>([])
     const [selectedOption, setSelectedOption] = useState(1)
     const [BuyerName, setBuyerName] = useState('')
 
@@ -20,10 +26,10 @@ export const FormPurchase = ({ticket, onSubmit}) =>{
             }
             else{
                 //Generate elements for available tickets
-                const availOptions=[];
+                const availOptions: JSX.Element[] = [];
                 if (ticket.available > 0) {
                     //setAvailQty(numberAvail);
-                    console.log("Disponibles:", ticket.available);
+                    console.log("Available:", ticket.available);
                     for (let i = 1; i <= ticket.available; i++) {
                         availOptions.push(<option key={i} value={i}>{i}</option>);
                     }
@@ -32,19 +38,20 @@ export const FormPurchase = ({ticket, onSubmit}) =>{
                 else{
                     //setAvailQty(numberAvail);
                     setOptions([])
-                    console.log("Disponibles:", 0);
+                    console.log("Available:", 0);
                 }
             }
         }
     }
     
-    const onBuy = (e) =>{
+    const onBuy = (e:any) =>{
         e.preventDefault();
-        onSubmit({
-            "guest_name": BuyerName,
-            "quantity": selectedOption,
-            "ticket": ticket.code
-        })
+        const buyInfo:buyInfo = {
+            guest_name: BuyerName,
+            quantity: selectedOption,
+            ticket: ticket.code
+        }
+        onSubmit(buyInfo)
     }
     
     return (
@@ -58,7 +65,7 @@ export const FormPurchase = ({ticket, onSubmit}) =>{
                     <select
                         value={selectedOption}
                         defaultValue={1}
-                        onChange={(e) => { setSelectedOption(e.target.value) }}
+                        onChange={(e) => { setSelectedOption(Number(e.target.value)) }}
                     >
                         {Options}
                     </select>

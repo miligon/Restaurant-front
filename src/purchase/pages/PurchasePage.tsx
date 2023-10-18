@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { FormPurchase } from '../components/FormPurchase';
+import { buyInfo } from '../interfaces';
+import { unauthTicket } from '../interfaces/interfaces';
 
 export const axiosR = axios.create({
     baseURL: `${import.meta.env.VITE_BASE_URL}`,
@@ -12,10 +14,16 @@ export const axiosR = axios.create({
     }
 });
 
+const emptyTicket:unauthTicket = {
+    code: '',
+    name: '',
+    available: 0,
+}
+
 export const PurchasePage = () => {
     const navigate = useNavigate();
 
-    const [Ticket, setTicket] = useState({})
+    const [Ticket, setTicket] = useState(emptyTicket)
     const { ticketCode } = useParams(); 
     
     const isInvalid = ticketCode === 'invalid';
@@ -28,18 +36,18 @@ export const PurchasePage = () => {
                     navigate('/purchase/invalid', {
                         replace: true
                       });
-                    console.log('No existe el ticket');
+                    console.log('Ticket dows not exists');
                 }
                 else{
                     setTicket(res.data);
-                    console.log("Ticket encontrado")
+                    console.log("Ticket found!")
                 }
             })
             .catch(err => console.log(err))
     }, [Status, ticketCode]);
 
     //Handler for buy action
-    const onBuy = (data) =>{
+    const onBuy = (data:buyInfo) =>{
         console.log("Buy clicked", data)
         axiosR.post(`/api/reservations/purchase/`, data)
             .then((res) => {
@@ -77,7 +85,7 @@ export const PurchasePage = () => {
           <hr />
           {isInvalid ? (
               // If the ticket's code is invalid
-              <h3>Codigo invalido</h3>
+              <h3>Invalid Ticket</h3>
           ) :
               (Ticket.available <= 0) ?
                   (msgSoldOut()) :

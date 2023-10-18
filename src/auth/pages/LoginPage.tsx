@@ -9,7 +9,7 @@ export const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
   
-    const onLogin = async (e) => {
+    const onLogin = async (e:any) => {
       e.preventDefault();
       if (username != "" &&
         password != "") {
@@ -42,7 +42,7 @@ export const LoginPage = () => {
               <button className="btn btn-primary"
                   type="submit"
                   onClick={onLogin}>
-                  Entrar
+                  Enter
               </button>
           </form>
       </div>

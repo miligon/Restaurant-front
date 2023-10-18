@@ -2,8 +2,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 
-import { PrivateRoute } from "./router/PrivateRoute";
-import { PublicRoute } from "./router/PublicRoute";
+import { PrivateRoute } from "./router/PrivateRoute.jsx";
+import { PublicRoute } from "./router/PublicRoute.jsx";
 
 import { PurchaseRouter } from "./purchase";
 import { TicketsRouter } from "./tickets";

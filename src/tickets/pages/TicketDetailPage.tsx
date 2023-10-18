@@ -2,17 +2,27 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { doTicketCreate, doTicketUpdate, doTicketDelete } from '../../store/tickets';
+import { RootState } from '../../store';
+import { ticketFromServer, ticketToServer } from '../../store/interfaces';
 
+const EmptyTicket:ticketFromServer = {
+  code: '',
+  restaurant: 0,
+  name: '',
+  max_purchase_count: 0,
+  purchase_count: 0,
+  soldout: false,
+}
 export const TicketDetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { tickets, status } = useSelector(state => state.tickets)
-  const { restaurants, selectedRestaurant } = useSelector(state => state.restaurants)
+  const { tickets, status } = useSelector((state:RootState) => state.tickets)
+  const { restaurants, selectedRestaurant } = useSelector((state:RootState) => state.restaurants)
   const navigate = useNavigate();
 
   // Detect if its a new ticket
   const isEditing = id !== 'new';
-  const [ticket, setTicket] = useState('not-found');
+  const [ticket, setTicket] = useState(EmptyTicket);
 
 
   useEffect(() => {
@@ -23,7 +33,7 @@ export const TicketDetailPage = () => {
       setTicket(record);
     } else {
       console.log('Record not found for code:', id);
-      setTicket('not-found')
+      setTicket(EmptyTicket)
     }
   }, [isEditing]);
 
@@ -32,29 +42,34 @@ export const TicketDetailPage = () => {
     navigate(`/${restaurant}/tickets`)
   }
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = (e:any) => {
     e.preventDefault();
     const restaurant = restaurants[selectedRestaurant].slug
+    let payload: ticketToServer = {
+      code: undefined,
+      restaurant: restaurant,
+      name: ticket.name,
+      max_purchase_count: ticket.max_purchase_count,
+      purchase_count: ticket.soldout ? 1 : 0,
+      soldout: undefined,
+    }
     if (isEditing) {
       // Update Ticket
       console.log('Ticket edited:', ticket);
-      dispatch(doTicketUpdate(id, ticket, restaurant));
+      payload.code = ticket.code;
+      dispatch(doTicketUpdate(Number(id), payload, restaurant));
       returnToTickets();
     } else {
       // Create a new ticket
-      const payload = ticket;
-      // Delete code from payload, it will be assigned by the backend
-      delete payload['code'];
-      dispatch(doTicketCreate(ticket, restaurant));
+      dispatch(doTicketCreate(payload, restaurant));
       returnToTickets();
-      console.log('New ticket created:', ticket);
+      console.log('New ticket created:', payload);
     }
   };
 
   const onDelete = () => {
-    const restaurant = restaurants[selectedRestaurant].slug
     // Delete Ticket
-    dispatch(doTicketDelete(id, restaurant));
+    dispatch(doTicketDelete(Number(id)));
     returnToTickets();
     console.log("Ticket deleted:", ticket);
   }

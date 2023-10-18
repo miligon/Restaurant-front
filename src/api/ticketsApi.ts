@@ -1,4 +1,5 @@
-import { axiosR } from "./";
+import { axiosR } from ".";
+import { ticketToServer } from "../store";
 
 export const getRestaurantList = async () => {
     try {
@@ -9,7 +10,7 @@ export const getRestaurantList = async () => {
     }
 }
 
-export const getTicketList = async (restaurantSlug) => {
+export const getTicketList = async (restaurantSlug: string) => {
     try {
         return await axiosR.get(`/api/reservations/tickets/?restaurant=${restaurantSlug}`)
     } catch (error) {
@@ -18,7 +19,7 @@ export const getTicketList = async (restaurantSlug) => {
     }
 }
 
-export const getTicketDetail = async (id) => {
+export const getTicketDetail = async (id: number) => {
     try {
         return await axiosR.get(`/api/reservations/tickets/${id}/`)
     } catch (error) {
@@ -27,7 +28,7 @@ export const getTicketDetail = async (id) => {
     }
 }
 
-export const updateTicketDetail = async (id, ticketData, restaurantSlug) => {
+export const updateTicketDetail = async (id: number, ticketData: ticketToServer, restaurantSlug: string) => {
     try {
         ticketData['restaurant'] = restaurantSlug
         return await axiosR.put(`/api/reservations/tickets/${id}/`, ticketData)
@@ -37,7 +38,7 @@ export const updateTicketDetail = async (id, ticketData, restaurantSlug) => {
     }
 }
 
-export const createTicketDetail = async (ticketData, restaurantSlug) => {
+export const createTicketDetail = async (ticketData: ticketToServer, restaurantSlug: string) => {
     try {
         ticketData['restaurant'] = restaurantSlug
         return await axiosR.post(`/api/reservations/tickets/`, ticketData)
@@ -47,7 +48,7 @@ export const createTicketDetail = async (ticketData, restaurantSlug) => {
     }
 }
 
-export const deleteTicketDetail = async (id) => {
+export const deleteTicketDetail = async (id:number) => {
     try {
         return await axiosR.delete(`/api/reservations/tickets/${id}/`)
     } catch (error) {
