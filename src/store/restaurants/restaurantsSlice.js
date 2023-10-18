@@ -2,23 +2,23 @@ import { createSlice } from '@reduxjs/toolkit'
 
 
 export const restaurantSlice = createSlice({
-    name: 'restaurant',
+    name: 'restaurants',
     initialState: {
         status: 'not-loaded', // loading, loaded
-        restaurants: [], 
-        selectedRestaurant: null
+        restaurants: [],
+        selectedRestaurant: null,
     },
     reducers: {
         setRestaurants: (state, action) => {
             state.status = 'loaded';
-            state.restaurants = action.payload
-            state.selectedRestaurant = 0
+            state.restaurants = action.payload;
+            state.selectedRestaurant = 0;
         },
         setLoading: (state) => {
             state.status = 'loading'
         },
         setSelectedRestaurant: (state, action) => {
-            state.selectedRestaurant = Number(action.payload.index)
+            state.selectedRestaurant = Number(action.payload.index);
         },
     }
 })

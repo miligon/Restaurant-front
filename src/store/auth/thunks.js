@@ -18,7 +18,7 @@ export const checkAuthentication = () => {
     }
 }
 
-export const DoLogin = (user, pass) => {
+export const doLogin = (user, pass) => {
     return async (dispatch) => {
         dispatch(checkingCredentials());
 
@@ -39,7 +39,7 @@ export const DoLogin = (user, pass) => {
     }
 }
 
-export const DoLogout = () => {
+export const doLogout = () => {
     return (dispatch) => {
         localStorage.removeItem('refresh')
         localStorage.removeItem('access')

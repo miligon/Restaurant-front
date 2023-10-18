@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useState } from "react";
-import { DoLogin } from '../../store/auth/thunks';
+import { doLogin } from '../../store/auth/thunks';
 
 
 export const LoginPage = () => {
@@ -14,7 +14,7 @@ export const LoginPage = () => {
       if (username != "" &&
         password != "") {
 
-        dispatch(DoLogin(username, password));
+        dispatch(doLogin(username, password));
       }
     }
 

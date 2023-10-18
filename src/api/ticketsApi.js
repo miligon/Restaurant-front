@@ -1,6 +1,6 @@
 import { axiosR } from "./";
 
-export const getRestaurantList = async() => {
+export const getRestaurantList = async () => {
     try {
         return await axiosR.get(`/api/restaurants/`)
     } catch (error) {
@@ -9,7 +9,7 @@ export const getRestaurantList = async() => {
     }
 }
 
-export const getTicketList = async(restaurantSlug) => {
+export const getTicketList = async (restaurantSlug) => {
     try {
         return await axiosR.get(`/api/reservations/tickets/?restaurant=${restaurantSlug}`)
     } catch (error) {
@@ -18,7 +18,7 @@ export const getTicketList = async(restaurantSlug) => {
     }
 }
 
-export const getTicketDetail = async(id, restaurantSlug) => {
+export const getTicketDetail = async (id) => {
     try {
         return await axiosR.get(`/api/reservations/tickets/${id}/`)
     } catch (error) {
@@ -27,9 +27,9 @@ export const getTicketDetail = async(id, restaurantSlug) => {
     }
 }
 
-export const updateTicketDetail = async(id, ticketData, restaurantSlug) => {
+export const updateTicketDetail = async (id, ticketData, restaurantSlug) => {
     try {
-        ticketData['restaurant']=restaurantSlug
+        ticketData['restaurant'] = restaurantSlug
         return await axiosR.put(`/api/reservations/tickets/${id}/`, ticketData)
     } catch (error) {
         console.log(error);
@@ -37,9 +37,9 @@ export const updateTicketDetail = async(id, ticketData, restaurantSlug) => {
     }
 }
 
-export const createTicketDetail = async(ticketData, restaurantSlug) => {
+export const createTicketDetail = async (ticketData, restaurantSlug) => {
     try {
-        ticketData['restaurant']=restaurantSlug
+        ticketData['restaurant'] = restaurantSlug
         return await axiosR.post(`/api/reservations/tickets/`, ticketData)
     } catch (error) {
         console.log(error);
@@ -47,7 +47,7 @@ export const createTicketDetail = async(ticketData, restaurantSlug) => {
     }
 }
 
-export const deleteTicketDetail = async(id, restaurantSlug) => {
+export const deleteTicketDetail = async (id) => {
     try {
         return await axiosR.delete(`/api/reservations/tickets/${id}/`)
     } catch (error) {
