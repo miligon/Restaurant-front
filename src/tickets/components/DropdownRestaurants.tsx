@@ -14,7 +14,7 @@ export const DropdownRestaurants = () => {
         // Handles the change on Restaurant value
         const index = event.target.value
         const selectedSlug = restaurants[index].slug;
-        dispatch(setCurrentRestaurant(index));
+        dispatch(setCurrentRestaurant(index) as any);
         navigate(`/${selectedSlug}/tickets`);
       };
 

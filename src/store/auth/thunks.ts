@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { useDispatch } from 'react-redux';
 import { login, logout, checkingCredentials } from "./"
 import { getRestaurants } from "../restaurants";
 import { loginOnServer } from "../../api/loginApi";
@@ -19,7 +20,7 @@ export const checkAuthentication = () => {
                 refresh: JSON.parse(localStorageRefreshToken)
             }
             if (token.access !== '' && token.refresh !=='') {
-                dispatch(getRestaurants());
+                dispatch(getRestaurants() as any);
                 dispatch(login());
             }
         }
@@ -37,7 +38,7 @@ export const doLogin = (user: string, pass: string) => {
             const token = response.data
             localStorage.setItem('refresh', JSON.stringify(token.refresh))
             localStorage.setItem('access', JSON.stringify(token.access))
-            dispatch(getRestaurants());
+            dispatch(getRestaurants() as any);
             dispatch(login());
             return;
         }

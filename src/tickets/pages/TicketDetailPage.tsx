@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { doTicketCreate, doTicketUpdate, doTicketDelete } from '../../store/tickets';
 import { RootState } from '../../store';
 import { ticketFromServer, ticketToServer } from '../../store/interfaces';
+import { AnyAction } from '@reduxjs/toolkit';
 
 const EmptyTicket:ticketFromServer = {
   code: '',
@@ -57,11 +58,11 @@ export const TicketDetailPage = () => {
       // Update Ticket
       console.log('Ticket edited:', ticket);
       payload.code = ticket.code;
-      dispatch(doTicketUpdate(Number(id), payload, restaurant));
+      dispatch(doTicketUpdate(Number(id), payload, restaurant) as any);
       returnToTickets();
     } else {
       // Create a new ticket
-      dispatch(doTicketCreate(payload, restaurant));
+      dispatch(doTicketCreate(payload, restaurant) as any);
       returnToTickets();
       console.log('New ticket created:', payload);
     }
@@ -69,7 +70,7 @@ export const TicketDetailPage = () => {
 
   const onDelete = () => {
     // Delete Ticket
-    dispatch(doTicketDelete(Number(id)));
+    dispatch(doTicketDelete(Number(id)) as any);
     returnToTickets();
     console.log("Ticket deleted:", ticket);
   }

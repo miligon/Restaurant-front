@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom';
 // views
 export const LogoutPage = () => {
   const dispatch = useDispatch();
-  dispatch(doLogout())
+  dispatch(doLogout() as any)
   
   return (
     <>

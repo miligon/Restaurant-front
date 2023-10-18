@@ -1,5 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
+const navigate  = useNavigate();
 
 export const axiosR = axios.create({
     baseURL: `${import.meta.env.VITE_BASE_URL}`,
@@ -12,7 +14,8 @@ export const axiosR = axios.create({
 // Use authentication token on every request
 axiosR.interceptors.request.use(
     config => {
-        const token = JSON.parse(localStorage.getItem('access'))
+        const data = localStorage.getItem('access')
+        const token = JSON.parse(data ? data : '')
         if (token) {
             config.headers['Authorization'] = 'Bearer ' + token
         }
@@ -44,7 +47,8 @@ axiosR.interceptors.response.use(
         // If token has expired
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true
-            const refreshToken = JSON.parse(localStorage.getItem('refresh'))
+            const data = localStorage.getItem('refresh')
+            const refreshToken = JSON.parse(data ? data : '')
             // Try to renew token
             return axios
                 .post(`${import.meta.env.VITE_BASE_URL}/api/auth/jwt/refresh/`, {
@@ -53,8 +57,9 @@ axiosR.interceptors.response.use(
                 .then(res => {
                     if (res.status === 200) {
                         localStorage.setItem('access', JSON.stringify(res.data.access));
+                        const accessToken = localStorage.getItem('access')
                         axios.defaults.headers.common['Authorization'] =
-                            'Bearer ' + JSON.parse(localStorage.getItem('access'))
+                            'Bearer ' + JSON.parse(accessToken ? accessToken : '')
                         // If token is renewed, retry the original request
                         return axios(originalRequest)
                     }

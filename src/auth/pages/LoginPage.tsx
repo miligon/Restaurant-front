@@ -14,7 +14,7 @@ export const LoginPage = () => {
       if (username != "" &&
         password != "") {
 
-        dispatch(doLogin(username, password));
+        dispatch(doLogin(username, password) as any);
       }
     }
 

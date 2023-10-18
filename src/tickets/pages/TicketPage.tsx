@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { refreshTickets } from '../../store/tickets';
@@ -16,13 +16,13 @@ export const TicketPage = () => {
   //Retrieve ticket's list per restaurant
   useEffect(() => {
     const restaurantSlug = restaurants[selectedRestaurant].slug
-    dispatch(refreshTickets(restaurantSlug));
+    dispatch(refreshTickets(restaurantSlug) as any);
   }, [selectedRestaurant]);
 
   useEffect(() => {
     const restaurantSlug = restaurants[selectedRestaurant].slug
     if (status === 'not-refreshed') {
-      dispatch(refreshTickets(restaurantSlug));
+      dispatch(refreshTickets(restaurantSlug) as any);
     }
   }, [status]);
 

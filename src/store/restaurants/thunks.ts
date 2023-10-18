@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { AnyAction } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setRestaurants, setLoading, setSelectedRestaurant } from "."
 import { getRestaurantList } from "../../api";
 import { AxiosResponse } from "axios";
@@ -15,7 +15,7 @@ export const getRestaurants = () => {
         }
         dispatch(setRestaurants([]));
     }
-}
+};
 
 export const setCurrentRestaurant = (restaurantIndex: number) => {
     return (dispatch: Dispatch) => {

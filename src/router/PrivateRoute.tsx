@@ -15,7 +15,7 @@ interface PrivateRouteProps {
 
     useEffect(() => {
         if (!logged){
-            dispatch( checkAuthentication() );
+            dispatch( checkAuthentication() as any);
         }
     },[])
 
