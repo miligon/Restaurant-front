@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import {
   doTicketCreate,
   doTicketUpdate,
@@ -8,7 +9,7 @@ import {
 } from '../../store/tickets'
 import { RootState } from '../../store'
 import { ticketFromServer, ticketToServer } from '../../store/interfaces'
-import { AnyAction } from '@reduxjs/toolkit'
+//import { AnyAction } from '@reduxjs/toolkit'
 
 const EmptyTicket: ticketFromServer = {
   code: '',
@@ -20,7 +21,7 @@ const EmptyTicket: ticketFromServer = {
 }
 export const TicketDetailPage = () => {
   const { id } = useParams()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { tickets, status } = useSelector((state: RootState) => state.tickets)
   const { restaurants, selectedRestaurant } = useSelector(
     (state: RootState) => state.restaurants,
@@ -63,11 +64,11 @@ export const TicketDetailPage = () => {
       // Update Ticket
       console.log('Ticket edited:', ticket)
       payload.code = ticket.code
-      dispatch(doTicketUpdate(Number(id), payload, restaurant) as any)
+      dispatch(doTicketUpdate(Number(id), payload, restaurant))
       returnToTickets()
     } else {
       // Create a new ticket
-      dispatch(doTicketCreate(payload, restaurant) as any)
+      dispatch(doTicketCreate(payload, restaurant))
       returnToTickets()
       console.log('New ticket created:', payload)
     }
@@ -75,7 +76,7 @@ export const TicketDetailPage = () => {
 
   const onDelete = () => {
     // Delete Ticket
-    dispatch(doTicketDelete(Number(id)) as any)
+    dispatch(doTicketDelete(Number(id)))
     returnToTickets()
     console.log('Ticket deleted:', ticket)
   }

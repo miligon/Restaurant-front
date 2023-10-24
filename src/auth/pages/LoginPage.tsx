@@ -1,9 +1,10 @@
-import { useDispatch } from 'react-redux'
+//import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../store/hooks'
 import { useState } from 'react'
 import { doLogin } from '../../store/auth/thunks'
 
 export const LoginPage = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -11,7 +12,7 @@ export const LoginPage = () => {
   const onLogin = async (e: any) => {
     e.preventDefault()
     if (username != '' && password != '') {
-      dispatch(doLogin(username, password) as any)
+      dispatch(doLogin(username, password))
     }
   }
 

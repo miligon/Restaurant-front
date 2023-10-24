@@ -1,28 +1,29 @@
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+//import { useSelector, useDispatch } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { refreshTickets } from '../../store/tickets'
 import { TableTickets } from '../components/TableTickets'
 import { DropdownRestaurants } from '../components/DropdownRestaurants'
 import { RootState } from '../../store'
 
 export const TicketPage = () => {
-  const dispatch = useDispatch()
-  const { tickets, status } = useSelector((state: RootState) => state.tickets)
-  const { restaurants, selectedRestaurant } = useSelector(
+  const dispatch = useAppDispatch()
+  const { tickets, status } = useAppSelector((state: RootState) => state.tickets)
+  const { restaurants, selectedRestaurant } = useAppSelector(
     (state: RootState) => state.restaurants,
   )
 
   //Retrieve ticket's list per restaurant
   useEffect(() => {
     const restaurantSlug = restaurants[selectedRestaurant].slug
-    dispatch(refreshTickets(restaurantSlug) as any)
+    dispatch(refreshTickets(restaurantSlug))
   }, [selectedRestaurant])
 
   useEffect(() => {
     const restaurantSlug = restaurants[selectedRestaurant].slug
     if (status === 'not-refreshed') {
-      dispatch(refreshTickets(restaurantSlug) as any)
+      dispatch(refreshTickets(restaurantSlug))
     }
   }, [status])
 
