@@ -30,6 +30,7 @@ axiosR.interceptors.response.use(
   // In case of error ...
   function (error) {
     const originalRequest = error.config
+    const navigate = useNavigate()
     // If there was an error at refreshing token
     if (
       error.response.status === 401 &&
